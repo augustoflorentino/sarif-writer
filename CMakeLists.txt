@@ -3,7 +3,7 @@ project(sarif-writer VERSION 0.1.0 DESCRIPTION "Streaming SARIF 2.1.0 writer" LA
 
 include(GNUInstallDirs)
 
-add_library(sarif-writer src/sarw_json.c src/sarw_uri.c)
+add_library(sarif-writer src/sarif-writer.c src/sarw_json.c src/sarw_uri.c)
 add_library(sarif-writer::sarif-writer ALIAS sarif-writer)
 target_include_directories(sarif-writer PUBLIC
     $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
