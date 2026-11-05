@@ -3,6 +3,7 @@ project(sarif-writer VERSION 0.1.0 DESCRIPTION "Streaming SARIF 2.1.0 writer" LA
 
 option(SARIF_WRITER_BUILD_TESTS "Build tests" OFF)
 option(SARIF_WRITER_BUILD_EXAMPLES "Build examples" OFF)
+option(SARIF_WRITER_BUILD_FUZZ "Build libFuzzer targets" OFF)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -59,4 +60,10 @@ endif()
 if(SARIF_WRITER_BUILD_EXAMPLES)
     add_executable(sarif_hello examples/sarif-hello.c)
     target_link_libraries(sarif_hello PRIVATE sarif-writer)
+endif()
+
+if(SARIF_WRITER_BUILD_FUZZ)
+    add_executable(fuzz_writer fuzz/fuzz_writer.c)
+    target_link_libraries(fuzz_writer PRIVATE sarif-writer)
+    target_link_options(fuzz_writer PRIVATE -fsanitize=fuzzer)
 endif()
