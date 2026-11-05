@@ -52,6 +52,8 @@ if(SARIF_WRITER_BUILD_TESTS)
     add_executable(sarw_lines tests/sarw_lines.c)
     target_link_libraries(sarw_lines PRIVATE sarif-writer)
     set_target_properties(test_sarif-writer sarw_lines PROPERTIES C_STANDARD 99)
+    add_library(sarif-writer_header_check OBJECT tests/header_check.c)
+    target_include_directories(sarif-writer_header_check PRIVATE include)
 endif()
 
 if(SARIF_WRITER_BUILD_EXAMPLES)
