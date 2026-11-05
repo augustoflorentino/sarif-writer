@@ -5,6 +5,7 @@ option(SARIF_WRITER_BUILD_TESTS "Build tests" OFF)
 option(SARIF_WRITER_BUILD_EXAMPLES "Build examples" OFF)
 
 include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 
 add_library(sarif-writer src/sarif-writer.c src/sarw_json.c src/sarw_uri.c)
 add_library(sarif-writer::sarif-writer ALIAS sarif-writer)
@@ -17,9 +18,31 @@ set_target_properties(sarif-writer PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR})
 
+set(PC_CFLAGS "")
 if(BUILD_SHARED_LIBS)
     target_compile_definitions(sarif-writer PRIVATE SARW_BUILD_SHARED INTERFACE SARW_SHARED)
+    set(PC_CFLAGS "-DSARW_SHARED")
 endif()
+
+install(TARGETS sarif-writer EXPORT sarif-writerTargets)
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install(EXPORT sarif-writerTargets
+    NAMESPACE sarif-writer::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sarif-writer)
+
+configure_package_config_file(cmake/sarif-writerConfig.cmake.in
+    ${PROJECT_BINARY_DIR}/sarif-writerConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sarif-writer)
+write_basic_package_version_file(${PROJECT_BINARY_DIR}/sarif-writerConfigVersion.cmake
+    COMPATIBILITY SameMajorVersion)
+install(FILES
+    ${PROJECT_BINARY_DIR}/sarif-writerConfig.cmake
+    ${PROJECT_BINARY_DIR}/sarif-writerConfigVersion.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/sarif-writer)
+
+configure_file(sarif-writer.pc.in ${PROJECT_BINARY_DIR}/sarif-writer.pc @ONLY)
+install(FILES ${PROJECT_BINARY_DIR}/sarif-writer.pc
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
 if(SARIF_WRITER_BUILD_TESTS)
     enable_testing()
