@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.sh text eol=lf
+*.sarif linguist-language=JSON
+bench/ export-ignore
+tests/oracle/ export-ignore
