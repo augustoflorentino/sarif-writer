@@ -1,0 +1,27 @@
+name: Wrong or invalid SARIF
+description: The document does not validate, a consumer rejects it, or a field comes out wrong
+body:
+  - type: textarea
+    id: calls
+    attributes:
+      label: Calls that produce it
+      description: The smallest sequence of sarw_* calls you can share
+      render: c
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      render: json
+    validations:
+      required: true
+  - type: input
+    id: consumer
+    attributes:
+      label: Who rejects it
+      placeholder: GitHub code scanning, the 2.1.0 schema, VS Code SARIF viewer...
+  - type: input
+    id: version
+    attributes:
+      label: sarif-writer version, compiler and OS

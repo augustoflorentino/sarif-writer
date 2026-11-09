@@ -1,0 +1,3 @@
+- [ ] `ctest --preset dev` passes
+- [ ] the output for the same calls is still byte-identical (or the change says why not)
+- [ ] public header changed: CHANGELOG.md says what callers have to do
