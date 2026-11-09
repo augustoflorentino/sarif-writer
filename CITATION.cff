@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Cite sarif-writer if a tool or study you publish writes its reports with it."
+type: software
+title: sarif-writer
+abstract: "C99 library that streams SARIF 2.1.0 reports in constant memory, with an order-checked API and output byte-identical across runs"
+authors:
+  - family-names: Florentino
+    given-names: Augusto
+license: MIT
+repository-code: "https://github.com/augustoflorentino/sarif-writer"
+keywords:
+  - c
+  - c99
+  - sarif
+  - static-analysis
+  - code-scanning
+  - json
+  - streaming
